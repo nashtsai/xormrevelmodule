@@ -42,12 +42,13 @@ type MyXormController struct {
 
 func (c MyXormController) List() revel.Result {
     users := make([]*Userinfo, 0)
-    c.engine.Find(&users)
+    c.Engine.Find(&users)
 	return c.Render(users)
 }
 </pre>
 
 ## Post XORM engine init. handler
+Post init. handler after xorm.Engine is initialized:
 
 <pre class="prettyprint lang-go">
 import (
@@ -60,5 +61,4 @@ func init() {
 		// your own init code, i.e., engine.Sync
     })
 }
-
 </pre>
