@@ -9,7 +9,7 @@ To activate it, add the module to your app configuration:
 	module.xorm = github.com/nashtsai/xormrevelmodule
 
 ## Options
-This module takes DB modules options:
+This module takes Revel db module options:
 
 	db.import = github.com/go-sql-driver/mysql	# golang db driver
 	db.driver = mysql							# driver name
