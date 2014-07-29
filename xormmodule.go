@@ -65,7 +65,6 @@ func AddPostInitProcessor(processor PostInitProcessorFunc) {
 }
 
 type XormController struct {
-	*revel.Controller
 	Engine *xorm.Engine
 }
 

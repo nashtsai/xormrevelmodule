@@ -26,7 +26,7 @@ XORM specific options:
 	xorm.showdebug = true	# show XORM debug info
 
 ## Using XORM controller
-Instead of having anonymous *revel.Controller member replace with with *xormmodule.XormController
+Add anonymous *xormmodule.XormController member to your revel controller struct:
 
 <pre class="prettyprint lang-go">
 import (
@@ -37,6 +37,7 @@ import (
 )
 
 type MyXormController struct {
+	*revel.Controller
 	*xormmodule.XormController
 }
 
