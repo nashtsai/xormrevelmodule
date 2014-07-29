@@ -11,7 +11,6 @@ To activate it, add the module to your app configuration:
 ## Options
 This module takes DB modules options:
 
-	db.import = github.com/go-sql-driver/mysql	# golang db driver
 	db.driver = mysql							# driver name
 	db.spec = root:@/mydb?charset=utf8			# datasource name
 
@@ -24,6 +23,15 @@ XORM specific options:
 
 	xorm.showsql = true 	# show SQL
 	xorm.showdebug = true	# show XORM debug info
+
+Import golang DB driver in your app/init.go:
+<pre class="prettyprint lang-go">
+import (
+	...
+    _ "github.com/go-sql-driver/mysql" 
+    ...
+)
+</pre>
 
 ## Using XORM controller
 Instead of having anonymous *revel.Controller member replace with with *xormmodule.XormController
@@ -51,7 +59,7 @@ func (c MyXormController) List() revel.Result {
 Post init. handler after xorm.Engine is initialized:
 
 <pre class="prettyprint lang-go">
-import (
+import ( 
 	"github.com/go-xorm/xorm"
 	"github.com/nashtsai/xormrevelmodule"
 )
