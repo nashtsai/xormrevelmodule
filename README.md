@@ -4,7 +4,7 @@ Revel XORM Module
 This is Revel Module to enable [XORM](http://xorm.io) in the [Revel framework](http://revel.github.io/).
 
 ## Activation
-To activate it, add the module to your app configuration:
+To activate it, add the module to your app.conf:
 
 	module.xorm = github.com/nashtsai/xormrevelmodule
 
