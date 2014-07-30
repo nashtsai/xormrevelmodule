@@ -26,7 +26,7 @@ XORM specific options:
 	xorm.showdebug = true	# show XORM debug info
 
 ## Using XORM controller
-Add anonymous xormmodule.XormController member to your revel controller struct:
+Add anonymous xormmodule.XormController or anonymous xormmodule.XormSessionController member to your revel controller struct:
 
 <pre class="prettyprint lang-go">
 import (
@@ -46,6 +46,16 @@ func (c MyXormController) List() revel.Result {
     c.Engine.Find(&users)
 	return c.Render(users)
 }
+
+type MyXormSessionController struct {
+	*revel.Controller
+	xormmodule.XormSessionController
+}
+
+func (c MyXormSessionController) Delete(id int64) revel.Result {
+    _, err: = c.XormSession.Delete(&UserInfo{id:id})
+	return c.Render(err)
+}
 </pre>
 
 ## Post XORM engine init. handler
@@ -63,3 +73,6 @@ func init() {
     })
 }
 </pre>
+
+## Advanced topics
+[Go Walker API references](https://gowalker.org/github.com/nashtsai/xormrevelmodule)
