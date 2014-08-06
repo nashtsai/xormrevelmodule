@@ -94,12 +94,26 @@ func (c *XormController) DetachSession() {
 }
 
 // Attach XormSession and call handler.
+//
+//   func (c MyXormController) List() revel.Result {
+//   	c.WithSession(func(s *xorm.Session) {
+//   		// fetch list from s
+//   	})
+//   }
 func (c *XormController) WithSession(handler SessionHandlerFunc) error {
 	c.AttachSession()
 	return handler(c.XormSession)
 }
 
-// Create a new xorm.Session and call handler, the xorm.Session will be closed after handler called.
+// Create a new xorm.Session and call handler, the xorm.Session will be closed after handler called. Where
+// common use cases being required async DB operation in another thread.
+//
+//   func (c MyXormController) List() revel.Result {
+//   	// async fetch xorm.Session operation
+//   	go c.WithNewSession(func(s *xorm.Session) {
+//   		// fetch list from s
+//   	})
+//   }
 func (c *XormController) WithNewSession(handler SessionHandlerFunc) error {
 	session := c.Engine.NewSession()
 	defer session.Close()
@@ -134,7 +148,8 @@ func (c *XormController) WithTx(handler SessionHandlerFunc) error {
 
 // Begin a SQL transaction and if handler did not return error
 // it will commit the transaction, otherwise rollback the transaction.
-// This will create a new xorm.Session for the handler.
+// This will create a new xorm.Session for the handler. Where
+// common use cases being required async DB operation in another thread.
 func (c *XormController) WithNewTx(handler SessionHandlerFunc) error {
 	session := c.Engine.NewSession()
 	defer session.Close()
