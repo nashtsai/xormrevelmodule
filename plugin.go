@@ -56,6 +56,7 @@ func Init() {
 	}
 }
 
+// Add post xorm.Engine init. handler. Common use cases are sync domain models, custom mapper, etc.
 func AddPostInitProcessor(processor PostInitProcessorFunc) {
 	if postProcessors == nil {
 		postProcessors = []PostInitProcessorFunc{}
@@ -66,6 +67,12 @@ func AddPostInitProcessor(processor PostInitProcessorFunc) {
 }
 
 // XormController to be added as anonymous member to the revel controller struct, with XormController.Engine attached.
+//
+//   type MyXormController struct {
+//	 	*revel.Controller
+//	 	xormmodule.XormController
+//   }
+//
 type XormController struct {
 	Engine      *xorm.Engine
 	XormSession *xorm.Session
@@ -167,6 +174,12 @@ func (c *XormController) Commit() revel.Result {
 
 // XormSessionController to be added as anonymous member to the revel controller struct, with XormController.Engine
 // and XormController.XormSession attached.
+//
+//   type MyXormSessionController struct {
+//	 	*revel.Controller
+//	 	xormmodule.XormSessionController
+//   }
+//
 type XormSessionController struct {
 	XormController
 }
@@ -182,8 +195,6 @@ func init() {
 	revel.InterceptMethod((*XormController).Attach, revel.BEFORE)
 	revel.InterceptMethod((*XormController).Commit, revel.AFTER)
 	revel.InterceptMethod((*XormController).Detach, revel.FINALLY)
-
 	revel.InterceptMethod((*XormSessionController).Attach, revel.BEFORE)
-
 	revel.OnAppStart(Init)
 }
